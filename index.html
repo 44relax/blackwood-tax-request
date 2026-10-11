@@ -284,14 +284,16 @@
                     }
                 });
                 
-                if (response.ok) {
+                const resultText = await response.text();
+                
+                if (response.ok && resultText === "Success") {
                     showSuccess();
                 } else {
-                    throw new Error('Network response was not ok.');
+                    throw new Error(resultText);
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง');
+                alert('เกิดข้อผิดพลาดจากระบบ: ' + error.message + '\n\nกรุณาติดต่อแอดมิน');
             } finally {
                 // คืนค่าปุ่มให้กลับมาเป็นเหมือนเดิม ไม่ว่าจะส่งสำเร็จหรือล้มเหลว
                 submitBtn.innerHTML = originalBtnText;
